@@ -11,7 +11,7 @@ const router = express.Router()
 // INDEX
 // GET /surveys
 router.get('/surveys', requireToken, (req, res, next) => {
-  Survey.find()
+  Survey.find().populate('response').exec()
     .then(surveys => {
       return surveys.map(survey => survey.toObject())
     })
@@ -22,7 +22,7 @@ router.get('/surveys', requireToken, (req, res, next) => {
 // SHOW
 // GET /surveys/5a7db6c74d55bc51bdf39793
 router.get('/surveys/:id', requireToken, (req, res, next) => {
-  Survey.findById(req.params.id)
+  Survey.findById(req.params.id).populate('response')
     .then(handle404)
     .then(survey => res.status(200).json({ survey: survey.toObject() }))
     .catch(next)
@@ -49,7 +49,9 @@ router.patch('/surveys/:id', requireToken, removeBlanks, (req, res, next) => {
     .then(handle404)
     .then(survey => {
       requireOwnership(req, survey)
-      return survey.update(req.body.survey)
+      // console.log(req.body.survey.response)
+      //  return survey.update(req.body.survey)
+      return survey.update({$push: {response: req.body.survey.response}})
     })
     .then(() => res.sendStatus(204))
     .catch(next)
