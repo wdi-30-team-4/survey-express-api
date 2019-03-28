@@ -61,7 +61,7 @@ router.delete('/surveys/:id', requireToken, (req, res, next) => {
   Survey.findById(req.params.id)
     .then(handle404)
     .then(survey => {
-      // requireOwnership(req, survey)
+      requireOwnership(req, survey)
       survey.remove()
     })
     .then(() => res.sendStatus(204))
