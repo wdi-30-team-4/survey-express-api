@@ -10,6 +10,10 @@ const surveySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  options: {
+    type: Array,
+    required: true
+  },
   response: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Response'
