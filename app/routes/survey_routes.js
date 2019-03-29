@@ -11,6 +11,7 @@ const router = express.Router()
 // INDEX
 // GET /surveys
 router.get('/surveys', requireToken, (req, res, next) => {
+  // Find all surveys and populate resonses based on response IDs
   Survey.find().populate('response').exec()
     .then(surveys => {
       return surveys.map(survey => survey.toObject())
@@ -20,7 +21,7 @@ router.get('/surveys', requireToken, (req, res, next) => {
 })
 
 // SHOW
-// GET /surveys/5a7db6c74d55bc51bdf39793
+// GET /surveys/:id
 router.get('/surveys/:id', requireToken, (req, res, next) => {
   Survey.findById(req.params.id).populate('response')
     .then(handle404)
@@ -40,25 +41,24 @@ router.post('/surveys', requireToken, (req, res, next) => {
     .catch(next)
 })
 
+// TODO: Needs to update Title, Question, and Options
 // UPDATE
-// PATCH /surveys/5a7db6c74d55bc51bdf39793
-router.patch('/surveys/:id', requireToken, removeBlanks, (req, res, next) => {
-  delete req.body.survey.owner
+// PATCH /surveys/:id
+// router.patch('/surveys/:id', requireToken, removeBlanks, (req, res, next) => {
+//   delete req.body.survey.owner
 
-  Survey.findById(req.params.id)
-    .then(handle404)
-    .then(survey => {
-      requireOwnership(req, survey)
-      // console.log(req.body.survey.response)
-      //  return survey.update(req.body.survey)
-      return survey.update({$push: {response: req.body.survey.response}})
-    })
-    .then(() => res.sendStatus(204))
-    .catch(next)
-})
+//   Survey.findById(req.params.id)
+//     .then(handle404)
+//     .then(survey => {
+//       requireOwnership(req, survey)
+//       return survey.update({$push: {response: req.body.survey.response}})
+//     })
+//     .then(() => res.sendStatus(204))
+//     .catch(next)
+// })
 
 // DESTROY
-// DELETE /surveys/5a7db6c74d55bc51bdf39793
+// DELETE /surveys/:id
 router.delete('/surveys/:id', requireToken, (req, res, next) => {
   Survey.findById(req.params.id)
     .then(handle404)
