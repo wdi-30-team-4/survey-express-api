@@ -41,21 +41,20 @@ router.post('/surveys', requireToken, (req, res, next) => {
     .catch(next)
 })
 
-// TODO: Needs to update Title, Question, and Options
 // UPDATE
 // PATCH /surveys/:id
-// router.patch('/surveys/:id', requireToken, removeBlanks, (req, res, next) => {
-//   delete req.body.survey.owner
+router.patch('/surveys/:id', requireToken, removeBlanks, (req, res, next) => {
+  delete req.body.survey.owner
 
-//   Survey.findById(req.params.id)
-//     .then(handle404)
-//     .then(survey => {
-//       requireOwnership(req, survey)
-//       return survey.update({$push: {response: req.body.survey.response}})
-//     })
-//     .then(() => res.sendStatus(204))
-//     .catch(next)
-// })
+  Survey.findById(req.params.id)
+    .then(handle404)
+    .then(survey => {
+      requireOwnership(req, survey)
+      return survey.update(req.body.survey)
+    })
+    .then(() => res.sendStatus(204))
+    .catch(next)
+})
 
 // DESTROY
 // DELETE /surveys/:id
