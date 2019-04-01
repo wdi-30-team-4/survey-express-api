@@ -32,19 +32,22 @@ survey not taken in the past.
 
 ## Routes
 
-POST /sign-up     users#signup
-POST /sign-in     users#signin
-DELETE /sign-out  users#signout
-PATCH /change-password  users#changepw
+User:
+ * POST /sign-up     users#signup
+ * POST /sign-in     users#signin
+ * DELETE /sign-out  users#signout
+ * PATCH /change-password  users#changepw
 
-GET    /surveys     surveys#index
-POST /surveys  surveys#create
-GET    /surveys/:id     surveys#show
-PATCH    /surveys/:id     surveys#update
-DELETE /surveys/:id  surveys#destroy
+Survey:
+ * GET    /surveys     surveys#index
+ * POST /surveys  surveys#create
+ * GET    /surveys/:id     surveys#show
+ * PATCH    /surveys/:id     surveys#update
+ * DELETE /surveys/:id  surveys#destroy
 
-GET /response response#index
-POST /response response#create
+Response:
+ * GET /response response#index
+ * POST /response response#create
 
 ## Reach Goal
   Let user create a survey with more than two options.
