@@ -50,6 +50,7 @@ router.patch('/surveys/:id', requireToken, removeBlanks, (req, res, next) => {
     .then(handle404)
     .then(survey => {
       requireOwnership(req, survey)
+      req.body.survey.response = []
       return survey.update(req.body.survey)
     })
     .then(() => res.sendStatus(204))
