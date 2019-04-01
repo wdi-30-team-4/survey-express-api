@@ -8,6 +8,8 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
+const BadOptionsError = customErrors.BadOptionsError
+
 // INDEX
 // GET /surveys
 router.get('/surveys', requireToken, (req, res, next) => {
@@ -33,7 +35,9 @@ router.get('/surveys/:id', requireToken, (req, res, next) => {
 // POST /surveys
 router.post('/surveys', requireToken, (req, res, next) => {
   req.body.survey.owner = req.user.id
-
+  if (req.body.survey.options[0] === req.body.survey.options[1]) {
+    throw new BadOptionsError()
+  }
   Survey.create(req.body.survey)
     .then(survey => {
       res.status(201).json({ survey: survey.toObject() })
@@ -50,6 +54,7 @@ router.patch('/surveys/:id', requireToken, removeBlanks, (req, res, next) => {
     .then(handle404)
     .then(survey => {
       requireOwnership(req, survey)
+      req.body.survey.response = []
       return survey.update(req.body.survey)
     })
     .then(() => res.sendStatus(204))
