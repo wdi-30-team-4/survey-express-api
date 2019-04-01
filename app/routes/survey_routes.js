@@ -23,7 +23,7 @@ router.get('/surveys', requireToken, (req, res, next) => {
 // SHOW
 // GET /surveys/:id
 router.get('/surveys/:id', requireToken, (req, res, next) => {
-  Survey.findById(req.params.id).populate()
+  Survey.findById(req.params.id).populate('response')
     .then(handle404)
     .then(survey => res.status(200).json({ survey: survey.toObject() }))
     .catch(next)
