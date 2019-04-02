@@ -19,7 +19,7 @@ survey not taken in the past.
 ## ERD
 ![ERD Diagram](https://res.cloudinary.com/lucasl/image/upload/v1553714996/Screen_Shot_2019-03-27_at_3.25.58_PM.png)
 
-## Planning and Execution
+## Planning, Process, and Execution
   We started with designing wireframes and ERD.
   Meet in the morning and do a standup everyday. Prioritize and assign tasks.
   Two people worked on front-end and two on back-end.
@@ -49,6 +49,13 @@ Response:
  * GET /response response#index
  * POST /response response#create
 
-## Reach Goal
-  Let user create a survey with more than two options.
-  Make a real-time dashboard.
+## Problem solving strategy
+  Our problem solving strategy was that if any one team member was stuck on one problem for
+  more than an hour we would all come together as a group to brainstorm possible solutions.
+  We found that having fresh eyes on a problem would often lead to new insights and ideas
+  that made solving it much easier.
+
+## Reach Goals & Unsolved Problems
+  - Let user create a survey with more than two options
+  - Make a real-time dashboard
+  - Make custom page routes so users can share links to their surveys
